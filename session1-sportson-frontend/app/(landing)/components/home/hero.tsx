@@ -1,6 +1,7 @@
 import { FiFastForward } from 'react-icons/fi';
 import Button from '../ui/button';
 import Image from 'next/image';
+
 const HeroSection = () => {
   return (
     <section id="hero-section" className="container mx-auto h-screen flex py-16">
@@ -8,7 +9,7 @@ const HeroSection = () => {
         <Image src="/images/img-basketball.png" alt="basketball sporton" width={432} height={432} className="grayscale absolute left-0 -top-20" />
         <div className="relative ml-40 w-full">
           <div className="text-primary italic">Friday Sale, 50%</div>
-          <h1 className="font-extrabold text-[95px] italic bg-gradient-to-b leading-tight from-black to-[#979797] bg-clip-text text-transparent">
+          <h1 className="font-extrabold text-[95px] italic bg-linear-to-b leading-tight from-black to-[#979797] bg-clip-text text-transparent">
             Wear YOUR <br /> TOP-QUALITY <br /> SPORTSWEAR
           </h1>
           <p className="w-1/2 mt-10 leading-loose">Engineered for endurance and designed for speed. Experience gear that moves as fast as you do. Premium fabrics. Unmatched comfort. Limitless motion.</p>

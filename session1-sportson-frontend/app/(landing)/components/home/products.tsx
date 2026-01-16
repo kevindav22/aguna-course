@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FiPlus } from 'react-icons/fi';
 import Button from '../../components/ui/button';
+import priceFormatter from '@/app/utils/price-formatter';
 
 const productsList = [
   {
@@ -70,7 +71,7 @@ const ProductSection = () => {
       </h2>
       <div className="grid grid-cols-4 gap-5">
         {productsList.map((product) => (
-          <Link href="#" key={product.id} className="p-1.5 bg-white hover:drop-shadow-xl duration-300">
+          <Link href={`/product/${product.name}`} key={product.id} className="p-1.5 bg-white hover:drop-shadow-xl duration-300">
             <div className="bg-primary-light aspect-square w-full flex justify-center items-center relative">
               <Image src={`/images/products/${product.imgUrl}`} width={300} height={300} alt={product.name} className="aspect-square object-contain" />
               <Button className="w-10 h-10 p-2! absolute top-0 right-0">
@@ -80,7 +81,9 @@ const ProductSection = () => {
             <h3 className="font-medium text-lg mb-1.5 mt-4">{product.name}</h3>
             <div className="flex justify-between mb-8">
               <div className="text-gray-500">{product.category}</div>
-              <div className="font-medium text-primary">{Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumSignificantDigits: 3 }).format(product.price)}</div>
+              <div className="font-medium text-primary">
+                {priceFormatter(product.price)}
+              </div>
             </div>
           </Link>
         ))}
