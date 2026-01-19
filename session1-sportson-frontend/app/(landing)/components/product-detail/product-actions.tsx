@@ -3,12 +3,28 @@ import { useState } from 'react';
 import { FiArrowRight, FiChevronDown, FiChevronUp, FiShoppingBag } from 'react-icons/fi';
 import Button from '../ui/button';
 import { useRouter } from 'next/navigation';
+import { useCartStore } from '@/app/hooks/use-cart-store';
+import { Product } from '@/app/types';
 
-const ProducAction = () => {
+type TProductActionsProps = {
+  product: Product;
+  stock: number;
+};
+
+const ProducAction = ({ product, stock }: TProductActionsProps) => {
+  const { addItem, items } = useCartStore();
   const { push } = useRouter();
   const [qty, setQty] = useState(1);
 
-  const checkout = () => {
+  const handleAddtoCart = () => {
+    addItem(product, qty);
+  };
+
+  const handleCheckout = () => {
+    const isCartEmpty = items.length === 0;
+    if (isCartEmpty) {
+      addItem(product, qty);
+    }
     push('/checkout');
   };
 
@@ -19,7 +35,7 @@ const ProducAction = () => {
           <span>{qty}</span>
         </div>
         <div className="flex flex-col">
-          <button onClick={() => setQty(qty + 1)} className="border-b border-gray-500 cursor-pointer h-1/2 aspect-square flex items-center justify-center">
+          <button onClick={() => setQty(qty < stock ? qty + 1 : qty)} className="border-b border-gray-500 cursor-pointer h-1/2 aspect-square flex items-center justify-center">
             <FiChevronUp />
           </button>
           <button onClick={() => setQty(qty > 1 ? qty - 1 : qty)} className="cursor-pointer h-1/2 aspect-square flex items-center justify-center">
@@ -27,10 +43,10 @@ const ProducAction = () => {
           </button>
         </div>
       </div>
-      <Button className="px-20 w-full">
+      <Button onClick={handleAddtoCart} className="px-20 w-full">
         <FiShoppingBag size={24} /> Add to Cart
       </Button>
-      <Button onClick={checkout} variant="dark" className="px-20 w-full">
+      <Button onClick={handleCheckout} variant="dark" className="px-20 w-full">
         Checkout Now <FiArrowRight size={24} />
       </Button>
     </div>

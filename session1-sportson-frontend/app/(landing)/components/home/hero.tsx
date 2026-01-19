@@ -6,7 +6,7 @@ const HeroSection = () => {
   return (
     <section id="hero-section" className="container mx-auto h-screen flex py-16">
       <div className="relative self-center">
-        <Image src="/images/img-basketball.png" alt="basketball sporton" width={432} height={432} className="grayscale absolute left-0 -top-20" />
+        <Image src="/images/img-basketball.png" alt="basketball sporton" width={432} height={432} className="grayscale absolute left-0 -top-20 " />
         <div className="relative ml-40 w-full">
           <div className="text-primary italic">Friday Sale, 50%</div>
           <h1 className="font-extrabold text-[95px] italic bg-linear-to-b leading-tight from-black to-[#979797] bg-clip-text text-transparent">
