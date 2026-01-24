@@ -31,5 +31,16 @@ html {
 }
 .input-group input,
 .input-group textarea {
-  @apply w-full py-2.5 px-4 bg-gray-100 focus:border focus:border-gray-100 outline-none text-sm;
+  @apply w-full py-3 px-4 bg-gray-100 focus:border-gray-100 outline-none text-sm;
+}
+
+/* admin */
+
+.input-group-admin label {
+  @apply block text-xs mb-1;
+}
+.input-group-admin input,
+.input-group-admin select,
+.input-group-admin textarea {
+  @apply w-full py-3 px-4 border border-[#DBDBDB] focus:border-gray-500 rounded-md outline-none text-sm;
 }
