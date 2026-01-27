@@ -1,21 +1,54 @@
 'use client';
 import Button from '@/app/(landing)/components/ui/button';
 import { FiPlus } from 'react-icons/fi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TransactionsTable from '../../components/transactions/transactions-table';
 import TransactionsModal from '../../components/transactions/transactions-modal';
+import { Transaction } from '@/app/types';
+import { getAllTransactions, updateTransaction } from '@/app/services/transactions.service';
+import { toast } from 'react-toastify';
 
 const TransactionsManagement = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTransaction, setIsSelectedTransaction] = useState<Transaction | null>(null);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
 
-  const handleCloseModal = () => {
-    setIsOpen(false);
+  const fetchTransactions = async () => {
+    try {
+      const data = await getAllTransactions();
+      setTransactions(data);
+    } catch (error) {
+      console.error('Error fetching transactions:', error);
+    }
   };
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setIsSelectedTransaction(null);
+  };
 
-  const handleViewDetails = () => {
-  setIsOpen(true)
-  }
+  const handleViewDetails = (transactions: Transaction) => {
+    setIsModalOpen(true);
+    setIsSelectedTransaction(transactions);
+  };
+
+  const handleStatusChange = async (id: string, status: 'paid' | 'rejected') => {
+    try {
+      const formData = new FormData();
+      formData.append('status', status);
+      await updateTransaction(id, formData);
+      toast.success('Transaction status updated successfully');
+      await fetchTransactions();
+    } catch (error) {
+      toast.error('Failed to update transaction status');
+    } finally {
+      setIsModalOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTransactions();
+  }, []);
 
   return (
     <div>
@@ -24,13 +57,13 @@ const TransactionsManagement = () => {
           <h1 className="font-bold text-2xl">Transactions Management</h1>
           <p className="opacity/50">Verify incoming payments and manage orders</p>
         </div>
-        <Button onClick={() => setIsOpen(true)} className="rounded-lg">
+        <Button onClick={() => setIsModalOpen(true)} className="rounded-lg">
           <FiPlus size={24} />
           Add Transactions
         </Button>
       </div>
-      <TransactionsTable onViewDetails={handleViewDetails} />
-      <TransactionsModal isOpen={isOpen} onClose={handleCloseModal} />
+      <TransactionsTable transactions={transactions} onViewDetails={handleViewDetails} />
+      <TransactionsModal transaction={selectedTransaction} onStatusChange={handleStatusChange} isOpen={isModalOpen} onClose={handleCloseModal} />
     </div>
   );
 };

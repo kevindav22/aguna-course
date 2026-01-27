@@ -7,7 +7,7 @@ import { FiCheckCircle } from 'react-icons/fi';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useCartStore } from '@/app/hooks/use-cart-store';
-import { transactionCheckout } from '@/app/services/transactions.services';
+import { transactionCheckout } from '@/app/services/transactions.service';
 
 const PaymentSteps = () => {
   const { push } = useRouter();

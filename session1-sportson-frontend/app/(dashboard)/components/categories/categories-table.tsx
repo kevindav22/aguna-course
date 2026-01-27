@@ -1,29 +1,15 @@
-import priceFormatter from '@/app/utils/price-formatter';
+import { getImageUrl } from '@/app/lib/api';
+import { Category } from '@/app/types';
 import Image from 'next/image';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 
-const categoryData = [
-  {
-    _id: 1,
-    name: 'Badmintoon',
-    imageUrl: '/images/categories/category-badminton.png',
-    description: 'Lorem ipsum ',
-  },
-  {
-    _id: 2,
-    name: 'Running',
-    imageUrl: '/images/categories/category-running.png',
-    description: 'Lorem ipsum ',
-  },
-  {
-    _id: 3,
-    name: 'Swimming',
-    imageUrl: '/images/categories/category-swimming.png',
-    description: 'Lorem ipsum  ',
-  },
-];
+type TCategoryTableProps = {
+  categories: Category[];
+  onEdit?: (category: Category) => void;
+  onDelete?: (id: string) => void;
+};
 
-const CategoryTable = () => {
+const CategoryTable = ({ categories, onDelete, onEdit }: TCategoryTableProps) => {
   return (
     <div className="bg-white rounded-xl border border-gray-200">
       <table className="w-full text-left border-collapse">
@@ -35,22 +21,22 @@ const CategoryTable = () => {
           </tr>
         </thead>
         <tbody>
-          {categoryData.map((data) => (
+          {categories.map((data) => (
             <tr key={data._id} className="border-b border-gray-200 last:border-b-0">
               <td className="px-6 py-4 font-medium">
                 <div className="flex items-center gap-2">
                   <div className="aspect-square bg-gray-100 rounded-md">
-                    <Image src={data.imageUrl} alt="data.name" width={52} height={52} className="aspect-square object-contain" />
+                    <Image src={getImageUrl(data.imageUrl)} alt="data.name" width={52} height={52} className="aspect-square object-contain" />
                   </div>
                   <span>{data.name}</span>
                 </div>
               </td>
               <td className="px-6 py-4 font-medium ">{data.description}</td>
               <td className="px-6 py-8 flex items-center gap-3 text-gray-600 ">
-                <button>
+                <button onClick={() => onEdit?.(data)} className="cursor-pointer">
                   <FiEdit2 size={20} />
                 </button>
-                <button>
+                <button onClick={() => onDelete?.(data._id)} className="cursor-pointer">
                   <FiTrash2 size={20} />
                 </button>
               </td>
