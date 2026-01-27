@@ -1,6 +1,4 @@
 'use client';
-import Button from '@/app/(landing)/components/ui/button';
-import { FiPlus } from 'react-icons/fi';
 import { useEffect, useState } from 'react';
 import TransactionsTable from '../../components/transactions/transactions-table';
 import TransactionsModal from '../../components/transactions/transactions-modal';
@@ -57,10 +55,7 @@ const TransactionsManagement = () => {
           <h1 className="font-bold text-2xl">Transactions Management</h1>
           <p className="opacity/50">Verify incoming payments and manage orders</p>
         </div>
-        <Button onClick={() => setIsModalOpen(true)} className="rounded-lg">
-          <FiPlus size={24} />
-          Add Transactions
-        </Button>
+
       </div>
       <TransactionsTable transactions={transactions} onViewDetails={handleViewDetails} />
       <TransactionsModal transaction={selectedTransaction} onStatusChange={handleStatusChange} isOpen={isModalOpen} onClose={handleCloseModal} />

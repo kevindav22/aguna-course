@@ -73,7 +73,7 @@ const BankInfoModal = ({ isOpen, bank, onSuccess, onClose }: TBankInfoModalProps
   }, [bank, isOpen]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Add New Bank Account">
+    <Modal isOpen={isOpen} onClose={onClose} title={isEditMode ? 'Edit Bank Info' : 'Add Bank Info'}>
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
         <div className="flex gap-7">
           <div className="flex flex-col gap-4 w-full">
