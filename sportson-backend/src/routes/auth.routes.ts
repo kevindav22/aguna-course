@@ -3,7 +3,7 @@ import { createdNewAdmin, signin } from '../controllers/auth.controller';
 
 const router = Router();
 
-router.post('/sign-in', signin);
-router.post('/created-admin', createdNewAdmin);
+router.post('/signin', signin);
+router.post('/register', createdNewAdmin);
 
 export default router;

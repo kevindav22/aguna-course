@@ -11,7 +11,7 @@ export const signin = async (req: Request, res: Response): Promise<void> => {
 
     const user = await User.findOne({ email });
 
-    // gabungkan pengecekan supaya tidak bocor info
+    // pengecekan supaya tidak bocor info
     if (!user || !(await bcrypt.compare(password, user.password))) {
       res.status(401).json({ message: 'Invalid credentials' });
       return;
